@@ -1,9 +1,20 @@
 import axios from 'axios';
 
-const BASE_CADANGAN = 'http://localhost:3000/';
+const BASE_CADANGAN = 'http://localhost:3000';
 
-export const BASE_URL: string =
-  ((import.meta.env.VITE_API_URL as string | undefined) || BASE_CADANGAN).replace(/\/+$/, '');
+// Deteksi otomatis jika berjalan di Vercel atau production, atau ambil dari import.meta.env
+export const BASE_URL: string = (() => {
+  const envUrl = import.meta.env.VITE_API_URL as string | undefined;
+  if (envUrl && envUrl.trim() !== '') {
+    return envUrl.replace(/\/+$/, '');
+  }
+  
+  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+    return 'https://backend-spmb-smktibaliglobalbadung.vercel.app';
+  }
+
+  return BASE_CADANGAN;
+})();
 
 const KUNCI_TOKEN = 'auth_token';
 const KUNCI_USER = 'user_data';
