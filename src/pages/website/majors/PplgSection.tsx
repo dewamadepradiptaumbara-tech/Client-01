@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useInView, useMotionValue, useSpring, motion } from "framer-motion";
 import { LuGraduationCap } from "react-icons/lu";
 import { FiCode, FiLayers } from "react-icons/fi";
-import backgroundPplg from "../../../assets/img/BackgroundPplg.jpg";
+import backgroundPplg from "../../../assets/img/background/BackgroundPplg.jpg";
 import { FaRobot } from "react-icons/fa";
 import { FaGear } from "react-icons/fa6";
 import { IoGameController } from "react-icons/io5";

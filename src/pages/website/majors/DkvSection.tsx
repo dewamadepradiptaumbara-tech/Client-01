@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useInView, useMotionValue, useSpring, motion } from "framer-motion";
 import { LuGraduationCap } from "react-icons/lu";
 import { FiPenTool, FiTv, FiMonitor, FiCamera, FiImage, FiBox } from "react-icons/fi";
-import backgroundDkv from "../../../assets/img/BackgroundDkv.jpg";
+import backgroundDkv from "../../../assets/img/background/BackgroundDkv.jpg";
 
 interface CounterProps {
   readonly value: number;

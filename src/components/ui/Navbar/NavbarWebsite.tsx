@@ -387,7 +387,7 @@ export default function NavbarSekolah(): ReactElement {
                   isLoggedIn
                     ? isAdmin
                       ? "/portal-panitia-spmb"
-                      : "/portal-siswa-spmb"
+                      : "/siswa/dashboard"
                     : "/login"
                 }
                 className="hidden items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-blue-600/20 sm:inline-flex hover:bg-blue-700 transition duration-200"
@@ -561,7 +561,7 @@ export default function NavbarSekolah(): ReactElement {
                   isLoggedIn
                     ? isAdmin
                       ? "/portal-panitia-spmb"
-                      : "/portal-siswa-spmb"
+                      : "/siswa/dashboard"
                     : "/login"
                 }
                 onClick={() => setOpenDrawer(false)}

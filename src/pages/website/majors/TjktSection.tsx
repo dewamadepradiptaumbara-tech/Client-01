@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useInView, useMotionValue, useSpring, motion } from "framer-motion";
 import { LuGraduationCap } from "react-icons/lu";
 import { FiServer, FiShield, FiWifi, FiCpu, FiTerminal, FiCloud } from "react-icons/fi";
-import backgroundTjkt from "../../../assets/img/BackgroundTjkt.jpg";
+import backgroundTjkt from "../../../assets/img/background/BackgroundTjkt.jpg";
 
 interface CounterProps {
   readonly value: number;

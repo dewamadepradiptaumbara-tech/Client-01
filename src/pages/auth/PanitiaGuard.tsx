@@ -14,10 +14,10 @@ export const PanitiaRoute: React.FC = () => {
   }
 
   const storedToken = token || localStorage.getItem('auth_token');
-  const storedRole = user?.role || localStorage.getItem('user_role');
+  const storedRole = String(user?.role || localStorage.getItem('user_role') || '').toLowerCase();
 
   if (!storedToken || (storedRole !== 'panitia' && storedRole !== 'admin')) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login-panitia" replace />;
   }
 
   return <Outlet />;
@@ -35,7 +35,7 @@ export const SiswaRoute: React.FC = () => {
   }
 
   const storedToken = token || localStorage.getItem('auth_token');
-  const storedRole = user?.role || localStorage.getItem('user_role');
+  const storedRole = String(user?.role || localStorage.getItem('user_role') || '').toLowerCase();
 
   if (!storedToken || storedRole !== 'siswa') {
     return <Navigate to="/login" replace />;

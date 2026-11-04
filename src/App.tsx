@@ -1,18 +1,24 @@
 import type { ReactElement } from "react";
-import { Routes, Route, Link, Navigate } from "react-router-dom";
-import { FiHome } from "react-icons/fi";
+import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layouts/MainLayout";
 import DashboardLayout from "./components/layouts/Dashboardlayout";
 import NotFound from "./pages/errors/NotFound";
 import AccessDenied from "./pages/errors/AccessDenied";
 import Maintenance from "./pages/errors/Maintenance";
-import logoSmk from "./assets/img/logo-smk.png";
 
 import Home from "./pages/website/Home/Home";
 import BdSection from "./pages/website/majors/BdSection";
 import DkvSection from "./pages/website/majors/DkvSection";
 import PplgSection from "./pages/website/majors/PplgSection";
 import TjktSection from "./pages/website/majors/TjktSection";
+import TkSection from "./pages/website/majors/TkSection";
+
+// import OrganizationalPage from "./pages/website/profile/";
+import FacilitiesPage from "./pages/website/profile/FacilitiesPage";
+import AccreditationPage from "./pages/website/profile/AccreditationPage";
+import AchievementsPage from "./pages/website/student/AchievementsPage";
+import ExtracurricularsPage from "./pages/website/student/ExtracurricularsPage";
+import ScholarshipsPage from "./pages/website/student/ScholarshipsPage";
 
 import ForgetPasswordForm from "./pages/auth/ForgetPasswordForm";
 import LoginForm from "./pages/auth/LoginForm";
@@ -23,53 +29,28 @@ import LoginPanitia from "./pages/auth/LoginPanitia";
 import ForgetPanitia from "./pages/auth/ForgetPanitia";
 import { PanitiaRoute } from "./pages/auth/PanitiaGuard";
 import BerandaAdmin from "./pages/dashboard/admin/beranda/BerandaAdmin";
-import TkSection from "./pages/website/majors/TkSection";
-
-interface PlaceholderPageProps {
-  readonly title: string;
-}
-
-const PlaceholderPage = ({ title }: PlaceholderPageProps): ReactElement => (
-  <div className="flex min-h-screen flex-col items-center justify-center bg-white px-4 text-center font-cabinet">
-    <img
-      src={logoSmk}
-      alt="Logo SMK TI Bali Global Badung"
-      className="h-20 w-auto object-contain mb-6"
-    />
-    <h1 className="text-3xl font-bold text-blue-600 sm:text-4xl">{title}</h1>
-    <p className="mt-2 text-sm text-gray-600 sm:text-base">
-      Halaman ini sedang dalam tahap pengembangan.
-    </p>
-    <Link
-      to="/"
-      className="mt-8 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-blue-600/25 transition-all duration-200 hover:bg-blue-700 hover:shadow-xl"
-    >
-      <FiHome className="text-lg" />
-      Kembali ke Beranda
-    </Link>
-  </div>
-);
+import OrganizationalPage from "./pages/website/profile/rganizationalPage";
+import BerandaSiswa from "./pages/dashboard/siswa/beranda/BerandaSiswa";
 
 export default function App(): ReactElement {
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/Profile/Organizational" element={<PlaceholderPage title="Struktur Organisasi" />} />
-        <Route path="/Profile/Facilities" element={<PlaceholderPage title="Fasilitas & Sarpras" />} />
-        <Route path="/Profile/Accreditation" element={<PlaceholderPage title="Akreditasi Sekolah" />} />
+        
+        <Route path="/Profile/Organizational" element={<OrganizationalPage />} />
+        <Route path="/Profile/Facilities" element={<FacilitiesPage />} />
+        <Route path="/Profile/Accreditation" element={<AccreditationPage />} />
 
         <Route path="/Majors/Pplg" element={<PplgSection />} />
         <Route path="/Majors/Dkv" element={<DkvSection />} />
         <Route path="/Majors/Tjkt" element={<TjktSection />} />
         <Route path="/Majors/Bd" element={<BdSection />} />
-        <Route path="/Majors/Tk" element={<TkSection/>} />
+        <Route path="/Majors/Tk" element={<TkSection />} />
 
-
-
-        <Route path="/StudentAffairs/Achievements" element={<PlaceholderPage title="Prestasi Siswa" />} />
-        <Route path="/StudentAffairs/Extracurriculars" element={<PlaceholderPage title="Ekstrakurikuler" />} />
-        <Route path="/StudentAffairs/Scholarships" element={<PlaceholderPage title="Informasi Beasiswa" />} />
+        <Route path="/StudentAffairs/Achievements" element={<AchievementsPage />} />
+        <Route path="/StudentAffairs/Extracurriculars" element={<ExtracurricularsPage />} />
+        <Route path="/StudentAffairs/Scholarships" element={<ScholarshipsPage />} />
 
         <Route path="/access-denied" element={<AccessDenied />} />
         <Route path="/maintenance" element={<Maintenance />} />
@@ -83,6 +64,11 @@ export default function App(): ReactElement {
       <Route path="/forget-panitia" element={<ForgetPanitia />} />
       <Route path="/forgot-password" element={<ForgetPasswordForm />} />
       <Route path="/otp" element={<OtpForm />} />
+
+      <Route element={<DashboardLayout userRole="siswa" />}>
+        <Route path="/siswa/dashboard" element={<BerandaSiswa />} />
+        {/* <Route path="" element={<BerandaSiswa />} /> */}
+      </Route>
 
       <Route element={<PanitiaRoute />}>
         <Route

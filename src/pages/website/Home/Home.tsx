@@ -2,7 +2,7 @@ import type { ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
 import { LuGraduationCap } from "react-icons/lu";
-import backgroundHome from "../../../assets/img/BackgroundHome.jpg";
+import backgroundHome from "../../../assets/img/background/BackgroundHome.jpg";
 import HomeSection from "./HomeSection";
 import RegistrationCard from "../../../components/ui/CardItems/CardPendaftaran"
 import CardIndustri from "../../../components/ui/CardItems/CardIndustri";

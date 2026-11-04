@@ -7,10 +7,12 @@ import {
   registerVerifyOtp,
   registerSendOtp,
 } from "../../services/Api";
+import { useAuth } from "../../context/AuthContext";
 
 export default function OtpForm() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
 
   const email = location.state?.email || "";
   const type = location.state?.type || "register";
@@ -74,21 +76,23 @@ export default function OtpForm() {
         navigate("/login");
       } else {
         const res = await registerVerifyOtp({ email, otp: otpCode });
-        if (res.access_token) {
-          localStorage.setItem("auth_token", res.access_token);
+        
+        if (res.access_token && res.data) {
+          login(res.access_token, res.data);
         }
 
-        if (res.data?.role === "panitia" || res.data?.role === "admin") {
-          navigate("/admin/dashboard");
+        const role = String(res.data?.role).toLowerCase();
+        if (role === "panitia" || role === "admin") {
+          navigate("/portal-panitia-spmb/dashboard", { replace: true });
         } else {
-          navigate("/siswa/dashboard");
+          navigate("/siswa/dashboard", { replace: true });
         }
       }
-    } catch (err: any) {
-      console.error("OTP Error:", err);
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { message?: string } }; message?: string };
       setErrorMessage(
-        err.response?.data?.message ||
-          err.message ||
+        errorObj.response?.data?.message ||
+          errorObj.message ||
           "Kode OTP salah atau kedaluwarsa.",
       );
     } finally {
@@ -112,10 +116,11 @@ export default function OtpForm() {
         }
       }
       setSuccessMessage("Kode OTP baru berhasil dikirim!");
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { message?: string } }; message?: string };
       setErrorMessage(
-        err.response?.data?.message ||
-          err.message ||
+        errorObj.response?.data?.message ||
+          errorObj.message ||
           "Gagal mengirim ulang OTP.",
       );
     } finally {

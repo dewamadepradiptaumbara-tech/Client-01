@@ -7,7 +7,7 @@ import {
   FolderCheck,
   CreditCard,
   Megaphone,
-  User,
+  User as User,
   LogOut,
   Bell,
   Menu,
@@ -17,7 +17,7 @@ import logoSmk from "../../../assets/img/logo-smk.png";
 import {
   getMyProfile,
   logoutUser,
-  type User as UserType,
+  type ProfilPengguna as UserType,
 } from "../../../services/Api";
 
 export interface NavItem {
@@ -147,8 +147,13 @@ export default function NavbarDashboard({
         if (!isActive) return;
         setUserData(user);
         localStorage.setItem("user_data", JSON.stringify(user));
-      } catch (err) {
+      } catch (err: any) {
         console.error("Gagal memuat profil navbar", err);
+        // Jika unauthorized, langsung lempar ke login
+        if (err?.response?.status === 401) {
+          localStorage.clear();
+          navigate("/login", { replace: true });
+        }
       } finally {
         if (isActive) {
           setFetching(false);
@@ -161,11 +166,11 @@ export default function NavbarDashboard({
     return () => {
       isActive = false;
     };
-  }, []);
+  }, [navigate]);
 
   const activeRole = userRole || userData?.role;
   const activeName =
-    userName || userData?.biodata?.nama_lengkap || userData?.username || "";
+    userName || userData?.namaLengkap || userData?.username || "";
   const activeEmail = userEmail || userData?.email || "";
 
   const profilePath =
@@ -183,16 +188,19 @@ export default function NavbarDashboard({
   };
 
   const handleLogoutAction = async () => {
-    if (onLogout) {
-      onLogout();
-    } else {
-      try {
-        await logoutUser();
-      } catch (err) {
-        console.error("Gagal melakukan request logout ke backend", err);
-      } finally {
-        navigate("/login");
+    try {
+      await logoutUser();
+    } catch (err) {
+      console.error("gagal melakukan request logout ke api", err);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user_data");
+      sessionStorage.clear();
+
+      if (onLogout) {
+        onLogout();
       }
+      navigate("/login", { replace: true });
     }
   };
 

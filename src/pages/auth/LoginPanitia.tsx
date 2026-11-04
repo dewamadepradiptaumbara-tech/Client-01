@@ -40,16 +40,17 @@ export default function LoginPanitia() {
         password: password,
       });
 
-      if (response.data.id_panitia !== idPanitia.trim()) {
+      if (response.data.panitiaId !== idPanitia.trim()) {
         setErrorMessage("ID Panitia tidak cocok dengan akun email tersebut.");
         setLoading(false);
         return;
       }
 
       login(response.access_token, response.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { message?: string } }; message?: string };
       setErrorMessage(
-        err.response?.data?.message || err.message || "Login panitia gagal. Periksa kembali data Anda."
+        errorObj.response?.data?.message || errorObj.message || "Login panitia gagal. Periksa kembali data Anda."
       );
       setLoading(false);
     }
